@@ -3,13 +3,13 @@ import { ArrowRight, Sparkles } from "lucide-react";
 
 const Hero = () => {
   return (
-    <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Gradient Background Elements */}
-        <div className="absolute top-32 -right-48 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/5 rounded-full blur-3xl -z-10"></div>
-        <div className="absolute top-64 -left-48 w-96 h-96 bg-indigo-500/10 dark:bg-indigo-500/5 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute top-32 -right-48 w-96 h-96 bg-blue-500/10 dark:bg-blue-500/5 rounded-full blur-3xl z-1"></div>
+        <div className="absolute top-64 -left-48 w-96 h-96 bg-indigo-500/10 dark:bg-indigo-500/5 rounded-full blur-3xl z-1"></div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-2">
           {/* Left Content */}
           <div className="space-y-8 z-10">
             {/* Badge */}

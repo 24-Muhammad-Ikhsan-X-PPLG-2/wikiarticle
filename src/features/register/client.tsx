@@ -1,7 +1,9 @@
 "use client";
 
-import NavbaraAuth from "@/components/layout/NavbarAuth";
+import { RegisterAuth } from "@/actions/register";
+import NavbarAuth from "@/components/layout/NavbarAuth";
 import ConfirmPasswordInput from "@/components/ui/ConfirmPasswordInput";
+import DateInput from "@/components/ui/DateInput";
 import EmailInput from "@/components/ui/EmailInput";
 import PasswordInput from "@/components/ui/PasswordInput";
 import SocialLoginButtons from "@/components/ui/SocialLoginButtons";
@@ -10,30 +12,25 @@ import handleSocialLogin from "@/lib/socialLogin";
 import { registerSchema, RegisterSchemaType } from "@/schemas/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, Loader } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import useRegister from "./hooks/useRegister";
 
 const Register = () => {
-  const [submitError, setSubmitError] = useState<string | null>(null);
   const {
-    register,
+    errors,
     handleSubmit,
-    formState: { errors, isSubmitting, isSubmitSuccessful, isValid },
-  } = useForm<RegisterSchemaType>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: {
-      confirmPassword: "",
-      email: "",
-      fullName: "",
-      password: "",
-    },
-  });
-  const submit: SubmitHandler<RegisterSchemaType> = () => {
-    alert("Submit");
-  };
+    isSubmitting,
+    isValid,
+    register,
+    submit,
+    submitError,
+    success,
+  } = useRegister();
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
-      <NavbaraAuth />
+      <NavbarAuth />
 
       {/* Background Gradient */}
       <div className="fixed inset-0 z-1">
@@ -67,11 +64,18 @@ const Register = () => {
 
             {/* Register Form */}
             <form onSubmit={handleSubmit(submit)} className="space-y-5">
-              {/* Full Name Input */}
+              {/* User Name Input */}
               <TextInput
-                error={errors.fullName?.message}
+                error={errors.username?.message}
                 placeholder="John Doe"
-                {...register("fullName")}
+                {...register("username")}
+              />
+
+              {/* Birth Date Input */}
+              <DateInput
+                error={errors.birthDate?.message}
+                nameInput="Birth Date"
+                {...register("birthDate")}
               />
 
               {/* Email Input */}
@@ -123,7 +127,7 @@ const Register = () => {
               {/* Register Button */}
               <button
                 type="submit"
-                disabled={!isValid || isSubmitting || isSubmitSuccessful}
+                disabled={!isValid || isSubmitting || success}
                 className="w-full px-4 py-3 bg-linear-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-500/30 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
@@ -131,7 +135,7 @@ const Register = () => {
                     <Loader className="w-5 h-5 animate-spin" />
                     <span>Creating account...</span>
                   </>
-                ) : isSubmitSuccessful ? (
+                ) : success ? (
                   <>
                     <div className="size-5 rounded-full bg-green-500 flex justify-center items-center">
                       <Check className="size-4" />

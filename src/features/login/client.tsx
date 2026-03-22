@@ -1,71 +1,49 @@
 "use client";
 
-import { LoginAuth } from "@/actions/login";
-import NavbaraAuth from "@/components/layout/NavbarAuth";
+import NavbarAuth from "@/components/layout/NavbarAuth";
 import EmailInput from "@/components/ui/EmailInput";
 import PasswordInput from "@/components/ui/PasswordInput";
 import SocialLoginButtons from "@/components/ui/SocialLoginButtons";
 import handleSocialLogin from "@/lib/socialLogin";
-import { loginSchema, LoginSchemaType } from "@/schemas/loginSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, Loader } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import useLogin from "./hooks/useLogin";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 
 const Login = () => {
-  const [success, setSuccess] = useState(false);
+  const searchParams = useSearchParams();
+  const [isSuccessReg, setIsSuccessReg] = useState(
+    searchParams.get("regSuccess") ? true : false,
+  );
+  const router = useRouter();
   const {
-    register,
+    errors,
     handleSubmit,
-    formState: { errors, isSubmitting, isValid },
-    setError,
-  } = useForm<LoginSchemaType>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      rememberMe: false,
-    },
-  });
-  const submit: SubmitHandler<LoginSchemaType> = async (dataForm) => {
-    try {
-      setSuccess(false);
-      console.log(dataForm.rememberMe);
-      const formData = new FormData();
-      formData.append("email", dataForm.email);
-      formData.append("password", dataForm.password);
-      formData.append("rememberMe", dataForm.rememberMe ? "on" : "");
-      const res = await LoginAuth(formData);
-      if (!res.success) {
-        if (res.error === "Invalid login credentials") {
-          setError("email", {
-            message: "Invalid email or password!",
-          });
-          setError("password", {
-            message: "Invalid email or password!",
-          });
-          return;
-        }
+    isSubmitting,
+    isValid,
+    register,
+    submit,
+    success,
+    submitError,
+  } = useLogin();
 
-        alert(res.error);
-        throw new Error(res.error ?? "");
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (isSuccessReg) {
+        setIsSuccessReg(false);
+        router.replace("/login", {
+          scroll: false,
+        });
       }
-      setSuccess(true);
-    } catch (e) {
-      setSuccess(false);
-      if (e instanceof Error) {
-        console.error(e.message);
-      } else {
-        console.error("Unexpected error!");
-        console.error(e);
-      }
-    }
-  };
+    }, 5000);
+    return () => clearTimeout(timeout);
+  }, []);
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
-      <NavbaraAuth />
+      <NavbarAuth />
 
       {/* Background Gradient */}
       <div className="fixed inset-0 z-1">
@@ -87,6 +65,32 @@ const Login = () => {
                 Login to your WikiArticle account
               </p>
             </div>
+
+            {/* Submit Error Message */}
+            <AnimatePresence mode="wait">
+              {submitError && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="mb-6 p-4 rounded-lg bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30"
+                >
+                  <p className="text-sm text-red-700 dark:text-red-400">
+                    {submitError}
+                  </p>
+                </motion.div>
+              )}
+              {isSuccessReg && (
+                <motion.div
+                  exit={{ opacity: 0 }}
+                  className="mb-6 p-4 rounded-lg bg-green-50 dark:bg-green-500/10 border border-green-200 dark:border-green-500/30"
+                >
+                  <p className="text-sm text-green-700 dark:text-green-400">
+                    You're in! Sign in to start exploring.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {/* Login Form */}
             <form onSubmit={handleSubmit(submit)} className="space-y-5">

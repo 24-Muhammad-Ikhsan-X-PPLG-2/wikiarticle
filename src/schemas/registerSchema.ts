@@ -2,7 +2,7 @@ import z from "zod";
 
 export const registerSchema = z
   .object({
-    fullName: z
+    username: z
       .string()
       .min(3, "Full name must be at least 3 characters")
       .nonempty("Full name is required"),
@@ -14,6 +14,9 @@ export const registerSchema = z
       .min(6, "Password must be at least 6 characters")
       .nonempty("Password is required"),
     confirmPassword: z.string().nonempty("Please confirm your password"),
+    birthDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
+      message: "Incorrect date of birth format",
+    }),
     terms: z.literal(true, {
       error: () => ({
         message: "Checklist the terms of service and privacy policy",

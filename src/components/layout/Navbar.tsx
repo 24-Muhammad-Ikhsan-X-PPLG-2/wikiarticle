@@ -22,9 +22,15 @@ const navLinks: NavLink[] = [
 
 type Props = {
   currentPage?: string;
+  isUserLoggedIn?: boolean;
+  handleLogout?: () => void;
 };
 
-const Navbar: FC<Props> = ({ currentPage = "Home" }) => {
+const Navbar: FC<Props> = ({
+  currentPage = "Home",
+  isUserLoggedIn = false,
+  handleLogout = () => {},
+}) => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -78,16 +84,27 @@ const Navbar: FC<Props> = ({ currentPage = "Home" }) => {
             </button>
 
             {/* Auth Buttons */}
-            <div className="md:flex hidden gap-4">
-              <Link href="/login">
-                <button className="px-4 py-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white font-medium transition-colors duration-200 cursor-pointer">
-                  Log In
+            {!isUserLoggedIn ? (
+              <div className="md:flex hidden gap-4">
+                <Link href="/login">
+                  <button className="px-4 py-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white font-medium transition-colors duration-200 cursor-pointer">
+                    Log In
+                  </button>
+                </Link>
+                <button className="px-6 py-2 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-medium hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+                  Sign Up
                 </button>
-              </Link>
-              <button className="px-6 py-2 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-lg font-medium hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
-                Sign Up
-              </button>
-            </div>
+              </div>
+            ) : (
+              <div className="md:flex hidden">
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white font-medium transition-colors duration-200 cursor-pointer"
+                >
+                  Sign Out
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
