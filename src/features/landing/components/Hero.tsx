@@ -1,7 +1,10 @@
 "use client";
+import useUserProfile from "@/hooks/useUserProfile";
 import { ArrowRight, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 const Hero = () => {
+  const { userInfo, isPending } = useUserProfile();
   return (
     <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -37,13 +40,31 @@ const Hero = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <button className="px-8 py-4 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-2">
-                Get Started
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              <button className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-xl font-semibold hover:bg-gray-50 dark:hover:bg-gray-900 transition-all duration-300">
-                Explore Articles
-              </button>
+              {!userInfo.user && !isPending ? (
+                <Link href={"/register"}>
+                  <button className="px-8 py-4 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-2">
+                    Get Started
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                </Link>
+              ) : userInfo.user && !isPending ? (
+                <Link href={"/explore"}>
+                  <button className="px-8 py-4 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-2">
+                    Create Article
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                </Link>
+              ) : (
+                <button className="px-8 py-4 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-2">
+                  Get Started
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              )}
+              <Link href={"/explore"}>
+                <button className="px-8 py-4 border-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-xl font-semibold hover:bg-gray-50 dark:hover:bg-gray-900 transition-all duration-300 cursor-pointer">
+                  Explore Articles
+                </button>
+              </Link>
             </div>
 
             {/* Stats */}

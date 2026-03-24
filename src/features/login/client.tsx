@@ -14,6 +14,7 @@ import { AnimatePresence, motion } from "motion/react";
 
 const Login = () => {
   const searchParams = useSearchParams();
+  const redirectParams = searchParams.get("redirect");
   const [isSuccessReg, setIsSuccessReg] = useState(
     searchParams.get("regSuccess") ? true : false,
   );
@@ -27,7 +28,7 @@ const Login = () => {
     submit,
     success,
     submitError,
-  } = useLogin();
+  } = useLogin({ redirect: redirectParams });
 
   useEffect(() => {
     const timeout = setTimeout(() => {

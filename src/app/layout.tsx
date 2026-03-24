@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/providers/ThemeProvider";
-import appName from "./constants/appName";
+import appName from "../constants/appName";
+import QueryProvider from "@/providers/QueryProvider";
 
 const InterFont = Inter({
   variable: "--font-inter-sans",
@@ -26,7 +27,9 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="overflow-x-hidden">
-        <ThemeProvider>{children}</ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );

@@ -1,6 +1,6 @@
-import { slugify } from "@/lib/slugify";
+"use client";
+
 import { Bookmark, Eye } from "lucide-react";
-import Link from "next/link";
 import { FC } from "react";
 
 type Props = {
@@ -36,11 +36,9 @@ const ArticleCard: FC<Props> = ({
           </span>
 
           {/* Title */}
-          <Link href={`/read/${slugify(title)}`}>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-              {title}
-            </h3>
-          </Link>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+            {title}
+          </h3>
 
           {/* Excerpt */}
           <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2 grow">

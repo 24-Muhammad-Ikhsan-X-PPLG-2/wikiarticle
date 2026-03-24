@@ -1,5 +1,8 @@
 "use client";
+import fetchUserIsLogin from "@/queryFetch/fetchUserIsLogin";
+import { createClient } from "@/supabase/client";
 import { NavLink } from "@/types/nav-links";
+import { useQuery } from "@tanstack/react-query";
 import { BookOpen, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -20,19 +23,34 @@ const navLinks: NavLink[] = [
   },
 ];
 
-type Props = {
+type BaseProps = {
   currentPage?: string;
-  isUserLoggedIn?: boolean;
-  handleLogout?: () => void;
 };
+
+type Props = BaseProps &
+  (
+    | {
+        showStatusLogin: true;
+        handleLogout: () => void;
+      }
+    | {
+        showStatusLogin?: false;
+        handleLogout?: never;
+      }
+  );
 
 const Navbar: FC<Props> = ({
   currentPage = "Home",
-  isUserLoggedIn = false,
+  showStatusLogin = false,
   handleLogout = () => {},
 }) => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const { data: isUserLoggedIn } = useQuery({
+    queryKey: ["userIsLogin"],
+    queryFn: fetchUserIsLogin,
+    initialData: false,
+  });
 
   useEffect(() => {
     setMounted(true);
@@ -84,7 +102,7 @@ const Navbar: FC<Props> = ({
             </button>
 
             {/* Auth Buttons */}
-            {!isUserLoggedIn ? (
+            {!isUserLoggedIn && showStatusLogin ? (
               <div className="md:flex hidden gap-4">
                 <Link href="/login">
                   <button className="px-4 py-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white font-medium transition-colors duration-200 cursor-pointer">
@@ -95,7 +113,7 @@ const Navbar: FC<Props> = ({
                   Sign Up
                 </button>
               </div>
-            ) : (
+            ) : isUserLoggedIn && showStatusLogin ? (
               <div className="md:flex hidden">
                 <button
                   onClick={handleLogout}
@@ -104,7 +122,7 @@ const Navbar: FC<Props> = ({
                   Sign Out
                 </button>
               </div>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

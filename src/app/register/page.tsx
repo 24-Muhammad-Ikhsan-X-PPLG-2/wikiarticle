@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import appName from "../constants/appName";
+import appName from "../../constants/appName";
 import RegisterClient from "@/features/register/client";
 
 export const metadata: Metadata = {

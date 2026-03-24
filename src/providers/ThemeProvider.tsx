@@ -10,7 +10,7 @@ const ThemeProvider: FC<ThemeProviderProps> = ({ children, ...props }) => {
   return (
     <ThemeProviderNext
       enableSystem
-      defaultTheme="system"
+      defaultTheme="dark"
       attribute={"class"}
       {...props}
     >

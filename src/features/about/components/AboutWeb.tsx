@@ -1,4 +1,4 @@
-import appName from "@/app/constants/appName";
+import appName from "@/constants/appName";
 import React from "react";
 
 const AboutWeb = () => {

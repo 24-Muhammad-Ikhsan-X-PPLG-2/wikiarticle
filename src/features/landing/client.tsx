@@ -9,29 +9,22 @@ import CTA from "./components/CTA";
 import Footer from "@/components/layout/Footer";
 import { User } from "@supabase/supabase-js";
 import { FC } from "react";
-import useModalLogout from "./hooks/useModalLogout";
-import ModalLogout from "./components/ModalLogout";
+import useModalLogout from "../../hooks/useModalLogout";
+import ModalLogout from "../../components/ui/ModalLogout";
 import { ProfileDB } from "@/supabase/dbTypes/profileDB";
 
-type Props = {
-  user: User | null;
-  profile: ProfileDB | null;
-};
-
-const Landing: FC<Props> = ({ user, profile }) => {
-  const { handleClose, handleOpen, showModalLogout } = useModalLogout();
+const Landing: FC = () => {
+  const { handleClose, handleOpen, showModalLogout, userInfo } =
+    useModalLogout();
   return (
     <>
       <ModalLogout
-        username={profile?.username}
+        username={userInfo.profile?.username}
         showModal={showModalLogout}
         onClose={handleClose}
       />
       <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
-        <Navbar
-          handleLogout={handleOpen}
-          isUserLoggedIn={user ? true : false}
-        />
+        <Navbar showStatusLogin handleLogout={handleOpen} />
         <main className="pt-16">
           <Hero />
           <FeaturesSection />

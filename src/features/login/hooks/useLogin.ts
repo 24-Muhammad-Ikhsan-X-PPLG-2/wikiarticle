@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-const useLogin = () => {
+const useLogin = ({ redirect }: { redirect: string | null }) => {
   const [success, setSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const router = useRouter();
@@ -54,6 +54,10 @@ const useLogin = () => {
         throw new Error(res.error ?? "");
       }
       setSuccess(true);
+      if (redirect) {
+        router.push(redirect);
+        return;
+      }
       router.push("/");
     } catch (e: any) {
       setSuccess(false);
