@@ -1,15 +1,16 @@
 "use client";
 
+import { CategoriesType } from "@/types/categories";
 import { FC } from "react";
 
 type Props = {
-  categories: string[];
-  activeCategory: string | null;
-  onCategoryChange: (category: string | null) => void;
+  categories: CategoriesType[] | null;
+  activeCategoryId: number | null;
+  onCategoryChange: (category: number | null) => void;
 };
 
 const CategoryFilter: FC<Props> = ({
-  activeCategory,
+  activeCategoryId,
   categories,
   onCategoryChange,
 }) => {
@@ -20,7 +21,7 @@ const CategoryFilter: FC<Props> = ({
         <button
           onClick={() => onCategoryChange(null)}
           className={`px-4 py-2 rounded-full font-medium transition-all duration-300 whitespace-nowrap ${
-            activeCategory === null
+            activeCategoryId === null
               ? "bg-blue-600 dark:bg-blue-600 text-white"
               : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
           }`}
@@ -29,19 +30,21 @@ const CategoryFilter: FC<Props> = ({
         </button>
 
         {/* Category Pills */}
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <button
-            key={category}
+            key={category.id}
             onClick={() =>
-              onCategoryChange(activeCategory === category ? null : category)
+              onCategoryChange(
+                activeCategoryId === category.id ? null : category.id,
+              )
             }
             className={`px-4 py-2 rounded-full font-medium transition-all duration-300 whitespace-nowrap ${
-              activeCategory === category
+              activeCategoryId === category.id
                 ? "bg-blue-600 dark:bg-blue-600 text-white"
                 : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
             }`}
           >
-            {category}
+            {category.name}
           </button>
         ))}
       </div>

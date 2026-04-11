@@ -1,6 +1,6 @@
 "use client";
 
-import { RegisterAuth } from "@/actions/register";
+import { RegisterAuth } from "@/actions/auth/register";
 import NavbarAuth from "@/components/layout/NavbarAuth";
 import ConfirmPasswordInput from "@/components/ui/ConfirmPasswordInput";
 import DateInput from "@/components/ui/DateInput";

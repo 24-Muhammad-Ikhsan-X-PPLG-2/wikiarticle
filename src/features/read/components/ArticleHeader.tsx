@@ -52,9 +52,11 @@ const ArticleHeader: FC<Props> = ({
       <div className="flex items-center gap-4 py-6 border-b border-gray-200 dark:border-gray-800">
         {/* Author Avatar & Info */}
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-linear-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-lg font-bold text-white">
-            {author.avatar}
-          </div>
+          <img
+            src={author.avatar}
+            className="size-12 object-cover object-center rounded-full"
+            alt=""
+          />
           <div>
             <p className="font-semibold text-gray-900 dark:text-white">
               {author.name}

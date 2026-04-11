@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${InterFont.variable} h-full antialiased`}
+      className={`${InterFont.variable} h-full antialiased overflow-x-hidden`}
       suppressHydrationWarning
     >
       <body className="overflow-x-hidden">

@@ -38,7 +38,7 @@ const Footer = () => {
     <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
-        <div className="py-16 grid grid-cols-1 md:grid-cols-5 gap-12">
+        <div className="py-16 grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-12">
           {/* Brand */}
           <div className="col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4 group">

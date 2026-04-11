@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { FC } from "react";
 
 type Props = {
@@ -14,8 +15,14 @@ const TeamMember: FC<Props> = ({ avatar, name, role, bio }) => {
     <div className="group">
       <div className="text-center bg-white dark:bg-gray-900 rounded-2xl p-8 border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 transition-all duration-300 hover:shadow-lg dark:hover:shadow-indigo-500/10 hover:shadow-indigo-500/10">
         {/* Avatar */}
-        <div className="mb-6 mx-auto w-24 h-24 rounded-full bg-linear-to-br from-blue-400 to-indigo-500 dark:from-blue-600 dark:to-indigo-700 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-          <span className="text-4xl">{avatar}</span>
+        <div className="mb-6 mx-auto w-24 h-24 rounded-full bg-linear-to-br from-blue-400 to-indigo-500 dark:from-blue-600 dark:to-indigo-700 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 relative">
+          <Image
+            width={96}
+            height={96}
+            alt={name}
+            src={`/img_creator/${avatar}`}
+            className="absolute size-full object-cover object-top rounded-full"
+          />
         </div>
 
         {/* Name */}

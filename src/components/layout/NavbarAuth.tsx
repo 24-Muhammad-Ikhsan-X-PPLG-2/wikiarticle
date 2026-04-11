@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const NavbaraAuth = () => {
+const NavbarAuth = () => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -51,4 +51,4 @@ const NavbaraAuth = () => {
   );
 };
 
-export default NavbaraAuth;
+export default NavbarAuth;

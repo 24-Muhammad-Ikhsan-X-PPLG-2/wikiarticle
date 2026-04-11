@@ -15,9 +15,11 @@ const AuthorBio: FC<Props> = ({ avatar, bio, name, articles }) => {
       <div className="bg-gray-50 dark:bg-gray-900/50 rounded-2xl p-8 border border-gray-200 dark:border-gray-800">
         <div className="flex flex-col sm:flex-row gap-6 items-start">
           {/* Avatar */}
-          <div className="w-24 h-24 shrink-0 rounded-full bg-linear-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-4xl font-bold text-white">
-            {avatar}
-          </div>
+          <img
+            src={avatar}
+            className="size-24 object-cover object-center shrink-0 rounded-full"
+            alt=""
+          />
 
           {/* Content */}
           <div className="grow">

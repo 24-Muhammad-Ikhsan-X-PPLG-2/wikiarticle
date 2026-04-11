@@ -2,7 +2,6 @@
 
 import { FC, useEffect, useState } from "react";
 import TableOfContentsItem from "./types/TableOfContentsItem";
-import ARTICLE_CONTENT from "./constants";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ArticleActions from "./components/ArticleActions";
@@ -12,8 +11,13 @@ import AuthorBio from "./components/AuthorBio";
 import RelatedArticles from "./components/RelatedArticles";
 import CommentSection from "./components/CommentSection";
 import markdownToHtml from "@/lib/markdownToHtml";
+import { ArticlesType } from "@/types/articles";
 
-const ReadClient: FC = () => {
+type Props = {
+  articleData: ArticlesType;
+};
+
+const ReadClient: FC<Props> = ({ articleData }) => {
   const [tableOfContents, setTableOfContents] = useState<TableOfContentsItem[]>(
     [],
   );
@@ -23,7 +27,7 @@ const ReadClient: FC = () => {
   useEffect(() => {
     (async () => {
       const parser = new DOMParser();
-      const html = await markdownToHtml(ARTICLE_CONTENT.content);
+      const html = await markdownToHtml(articleData.content);
       setContent(html);
       const doc = parser.parseFromString(html, "text/html");
       const headings = Array.from(doc.querySelectorAll("h2, h3")).map(
@@ -45,19 +49,24 @@ const ReadClient: FC = () => {
       <Navbar currentPage="Read" />
 
       {/* Article Actions (Sticky Sidebar) */}
-      <ArticleActions articleTitle={ARTICLE_CONTENT.title} />
+      <ArticleActions articleTitle={articleData.title} />
 
       {/* Table of Contents */}
       <TableOfContents items={tableOfContents} />
 
       {/* Article Header */}
       <ArticleHeader
-        title={ARTICLE_CONTENT.title}
-        subtitle={ARTICLE_CONTENT.subtitle}
-        author={ARTICLE_CONTENT.author}
-        publishedDate={ARTICLE_CONTENT.publishedDate}
-        readingTime={ARTICLE_CONTENT.readingTime}
-        category={ARTICLE_CONTENT.category}
+        title={articleData.title}
+        subtitle={articleData.description}
+        author={{
+          avatar: articleData.author.avatar_url,
+          name: articleData.author.username,
+        }}
+        publishedDate={new Intl.DateTimeFormat("id-ID", {
+          dateStyle: "long",
+        }).format(new Date(articleData.created_at))}
+        readingTime={8}
+        category={articleData.category.name}
       />
 
       {/* Main Article Content */}
@@ -69,17 +78,17 @@ const ReadClient: FC = () => {
 
       {/* Author Bio */}
       <AuthorBio
-        name={ARTICLE_CONTENT.author.name}
-        avatar={ARTICLE_CONTENT.author.avatar}
-        bio="Sarah is a technology writer and AI researcher with over 10 years of experience. She's passionate about making complex topics accessible to everyone."
+        name={articleData.author.username}
+        avatar={articleData.author.avatar_url}
+        bio={articleData.author.bio}
         articles={24}
       />
 
       {/* Related Articles */}
-      <RelatedArticles articles={ARTICLE_CONTENT.relatedArticles} />
+      <RelatedArticles />
 
       {/* Comments Section */}
-      <CommentSection comments={ARTICLE_CONTENT.comments} />
+      <CommentSection />
 
       <Footer />
     </div>

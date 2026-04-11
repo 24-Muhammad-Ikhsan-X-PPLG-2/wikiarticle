@@ -1,15 +1,25 @@
 "use client";
 
+import { EditProfile } from "@/actions/editProfile";
+import base64ToBlob from "@/lib/base64ToBlob";
+import { imageCompressionBlob } from "@/lib/imageCompression";
+import { uploadAvatar } from "@/lib/supabase";
 import {
   profileSettingsSchema,
   ProfileSettingsSchemaType,
 } from "@/schemas/profileSettingsSchema";
 import { ProfileDB } from "@/supabase/dbTypes/profileDB";
+import { ProfileDataType, SocialLink } from "@/types/profileData";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { User } from "@supabase/supabase-js";
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
-import { Resolver, useForm } from "react-hook-form";
+import {
+  Resolver,
+  useForm,
+  UseFormSetValue,
+  UseFormWatch,
+} from "react-hook-form";
 
 type Props = {
   user: User;
@@ -21,51 +31,15 @@ const useProfile = ({ user, profile }: Props) => {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | undefined>(
-    undefined,
+    profile.avatar_url ?? undefined,
   );
   const [croppedAvatar, setCroppedAvatar] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
-
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    reset,
-    watch,
-    setValue,
-  } = useForm<ProfileSettingsSchemaType>({
-    resolver: zodResolver(
-      profileSettingsSchema,
-    ) as Resolver<ProfileSettingsSchemaType>,
-    mode: "onBlur",
-    defaultValues: {
-      fullName: profile.username,
-      email: user.email,
-      username: profile.username,
-      enableDarkMode: theme === "dark",
-      emailNotifications: true,
-      weeklyDigest: false,
-      confirmNewPassword: "",
-      currentPassword: "",
-      newPassword: "",
-    },
-  });
+  const { setTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  useEffect(() => {
-    if (mounted) {
-      setValue("enableDarkMode", theme === "dark");
-    }
-  }, [theme, mounted, setValue]);
-
-  const handleDarkModeToggle = (enabled: boolean) => {
-    setTheme(enabled ? "dark" : "light");
-  };
 
   const onSubmit = async (data: ProfileSettingsSchemaType) => {
     setIsSubmitting(true);
@@ -73,16 +47,58 @@ const useProfile = ({ user, profile }: Props) => {
     setSubmitSuccess(false);
 
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      let imageUrl: string | null = null;
+      if (croppedAvatar) {
+        const blobAvatar = base64ToBlob(croppedAvatar ?? "");
+        console.log("Compress image...");
+        const compressFile = await imageCompressionBlob(
+          blobAvatar,
+          `avatar-${user.email}`,
+        );
+        const { publicUrl, error } = await uploadAvatar(
+          compressFile,
+          user.email ?? "",
+        );
+        if (error) throw new Error(error);
+        imageUrl = publicUrl;
+      }
 
-      console.log("Profile Settings:", {
-        ...data,
-        avatar: croppedAvatar,
-      });
+      // Combine individual social links into one object
+      const socialLinks: SocialLink = {
+        ...(data.twitter_url && { twitter: data.twitter_url }),
+        ...(data.github_url && { github: data.github_url }),
+        ...(data.linkedin_url && { linkedin: data.linkedin_url }),
+        ...(data.facebook_url && { facebook: data.facebook_url }),
+        ...(data.instagram_url && { instagram: data.instagram_url }),
+      };
 
+      const profileData: ProfileDataType = {
+        username: data.username,
+        bio: data.bio,
+        website_url: data.website_url,
+        social_links: socialLinks,
+        is_author: data.isAuthor,
+        avatar_url: imageUrl,
+      };
+      const profilePassword = {
+        currentPassword: data.currentPassword,
+        newPassword: data.newPassword,
+        confirmNewPassword: data.confirmNewPassword,
+      };
+      setTheme(data.enableDarkMode ? "dark" : "light");
+      const form = new FormData();
+      form.append("profile", JSON.stringify(profileData));
+      form.append("profilePassword", JSON.stringify(profilePassword));
+      const { error } = await EditProfile(form);
+      if (error) throw new Error(error);
       setSubmitSuccess(true);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       setTimeout(() => setSubmitSuccess(false), 3000);
     } catch (error) {
+      console.error(error);
       setSubmitError(
         error instanceof Error ? error.message : "An error occurred",
       );
@@ -101,29 +117,15 @@ const useProfile = ({ user, profile }: Props) => {
     }
   };
 
-  const darkModeEnabled = watch("enableDarkMode");
-  const newPassword = watch("newPassword");
-  const confirmNewPassword = watch("confirmNewPassword");
-
   return {
-    darkModeEnabled,
-    newPassword,
-    confirmNewPassword,
-    register,
-    handleSubmit,
     onSubmit,
     handleDeleteAccount,
-    errors,
-    isValid,
-    reset,
-    handleDarkModeToggle,
     isSubmitting,
     submitSuccess,
     submitError,
     avatarPreview,
     setAvatarPreview,
     setCroppedAvatar,
-    setValue,
   };
 };
 

@@ -22,7 +22,7 @@ const EmailInput: FC<Props> = ({ error, ref, ...props }) => {
             error
               ? "border-red-500 dark:border-red-500 focus:ring-red-500"
               : "border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-transparent"
-          } text-gray-900 dark:text-white`}
+          } text-gray-900 dark:text-white dark:read-only:bg-gray-800 read-only:bg-gray-200`}
           ref={ref}
           {...props}
         />

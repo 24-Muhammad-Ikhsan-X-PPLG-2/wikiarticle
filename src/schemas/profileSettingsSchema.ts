@@ -1,23 +1,30 @@
+import { SocialLink } from "@/types/profileData";
 import z from "zod";
 
 export const profileSettingsSchema = z
   .object({
-    fullName: z
-      .string()
-      .min(3, "Full name must be at least 3 characters")
-      .nonempty("Full name is required"),
-    email: z.email("Please enter a valid email"),
     username: z
       .string()
       .min(3, "Username must be at least 3 characters")
-      .optional()
-      .or(z.literal("")),
+      .nonempty(),
     currentPassword: z.string().optional(),
     newPassword: z.string().optional(),
     confirmNewPassword: z.string().optional(),
     enableDarkMode: z.boolean().default(false),
     emailNotifications: z.boolean().default(true),
     weeklyDigest: z.boolean().default(false),
+    bio: z
+      .string()
+      .max(500, "Bio must be at most 500 characters")
+      .optional()
+      .or(z.literal("")),
+    website_url: z.url("Invalid URL format").optional().or(z.literal("")),
+    twitter_url: z.url("Invalid URL format").optional().or(z.literal("")),
+    github_url: z.url("Invalid URL format").optional().or(z.literal("")),
+    linkedin_url: z.url("Invalid URL format").optional().or(z.literal("")),
+    facebook_url: z.url("Invalid URL format").optional().or(z.literal("")),
+    instagram_url: z.url("Invalid URL format").optional().or(z.literal("")),
+    isAuthor: z.boolean().default(false),
   })
   .refine(
     (data) => {

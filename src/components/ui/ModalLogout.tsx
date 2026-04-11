@@ -1,6 +1,6 @@
 "use client";
 
-import { LogoutAuth } from "@/actions/logout";
+import { LogoutAuth } from "@/actions/auth/logout";
 import { X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
@@ -45,7 +45,7 @@ const ModalLogout: FC<Props> = ({ onClose, showModal, username = "User" }) => {
             ref={containerRef}
             className="bg-white relative dark:bg-gray-900 rounded-md w-100 overflow-hidden h-fit p-5"
           >
-            <div className="dark:bg-gray-200 bg-gray-900 absolute bottom-0 right-0 size-17 z-0 blur-2xl"></div>
+            <div className="dark:bg-gray-200 bg-gray-900 absolute bottom-0 right-0 size-17 z-0 blur-[100px]"></div>
             <div className="flex mb-3 justify-between items-center">
               <h1 className="font-bold text-lg">Sign Out</h1>
               <X onClick={onClose} className="size-6 cursor-pointer" />
@@ -62,7 +62,7 @@ const ModalLogout: FC<Props> = ({ onClose, showModal, username = "User" }) => {
               </button>
               <button
                 onClick={handleLogout}
-                className="px-5 relative z-1 text-white py-2 hover:-translate-y-1 transition duration-200 rounded-md font-medium cursor-pointer bg-red-500"
+                className="px-5 relative z-1 py-2 hover:-translate-y-1 transition duration-200 rounded-md font-medium cursor-pointer bg-red-600/15 border border-red-600/40 dark:text-red-400 text-red-500"
               >
                 Sign me off
               </button>

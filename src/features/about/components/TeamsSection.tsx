@@ -5,25 +5,25 @@ const teamMembers = [
   {
     name: "Sarah Johnson",
     role: "Founder & CEO",
-    avatar: "👩‍💼",
+    avatar: "sarah.webp",
     bio: "Former PM at a major tech company. Passionate about democratizing knowledge.",
   },
   {
     name: "Muhammad Ikhsan",
     role: "CTO",
-    avatar: "👨‍💻",
+    avatar: "photo_ikhsan.webp",
     bio: "Full-stack developer with 10+ years of experience in scalable systems.",
   },
   {
     name: "Emily Rodriguez",
     role: "Head of Community",
-    avatar: "👩‍🤝‍👨",
+    avatar: "emily.webp",
     bio: "Community builder focused on creating engaging experiences for contributors.",
   },
   {
     name: "David Kim",
     role: "Product Lead",
-    avatar: "👨‍🚀",
+    avatar: "david.webp",
     bio: "UX designer turned product leader. Obsessed with user experience.",
   },
 ];

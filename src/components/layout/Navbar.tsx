@@ -3,7 +3,7 @@ import fetchUserIsLogin from "@/queryFetch/fetchUserIsLogin";
 import { createClient } from "@/supabase/client";
 import { NavLink } from "@/types/nav-links";
 import { useQuery } from "@tanstack/react-query";
-import { BookOpen, Moon, Sun } from "lucide-react";
+import { BookOpen, Moon, Sun, User } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { FC, useEffect, useState } from "react";
@@ -114,7 +114,12 @@ const Navbar: FC<Props> = ({
                 </button>
               </div>
             ) : isUserLoggedIn && showStatusLogin ? (
-              <div className="md:flex hidden">
+              <div className="md:flex hidden gap-1">
+                <Link href={"/profile"}>
+                  <div className="p-2.5 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 cursor-pointer">
+                    <User className="size-5" />
+                  </div>
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="px-4 py-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white font-medium transition-colors duration-200 cursor-pointer"

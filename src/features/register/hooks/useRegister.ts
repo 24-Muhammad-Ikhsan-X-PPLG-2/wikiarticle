@@ -1,6 +1,6 @@
 "use client";
 
-import { RegisterAuth } from "@/actions/register";
+import { RegisterAuth } from "@/actions/auth/register";
 import { registerSchema, RegisterSchemaType } from "@/schemas/registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";

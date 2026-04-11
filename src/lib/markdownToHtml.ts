@@ -3,6 +3,7 @@ import html from "remark-html";
 import rehypeSlug from "rehype-slug";
 import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
+import remarkGfm from "remark-gfm";
 
 export default async function markdownToHtml(md: string) {
   const result = await remark()
@@ -10,6 +11,7 @@ export default async function markdownToHtml(md: string) {
     .use(remarkRehype)
     .use(rehypeSlug)
     .use(rehypeStringify)
+    .use(remarkGfm)
     .process(md);
   return result.toString();
 }
