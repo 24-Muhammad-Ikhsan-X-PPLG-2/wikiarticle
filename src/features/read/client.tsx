@@ -44,12 +44,15 @@ const ReadClient: FC<Props> = ({ articleData }) => {
       setTableOfContents(headings);
     })();
   }, []);
+  const publishedDate = new Intl.DateTimeFormat("id-ID", {
+    dateStyle: "long",
+  }).format(new Date(articleData.created_at));
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
       <Navbar currentPage="Read" />
 
       {/* Article Actions (Sticky Sidebar) */}
-      <ArticleActions articleTitle={articleData.title} />
+      <ArticleActions articleTitle={articleData.title} isSticky />
 
       {/* Table of Contents */}
       <TableOfContents items={tableOfContents} />
@@ -62,9 +65,7 @@ const ReadClient: FC<Props> = ({ articleData }) => {
           avatar: articleData.author.avatar_url,
           name: articleData.author.username,
         }}
-        publishedDate={new Intl.DateTimeFormat("id-ID", {
-          dateStyle: "long",
-        }).format(new Date(articleData.created_at))}
+        publishedDate={publishedDate}
         readingTime={8}
         category={articleData.category.name}
       />

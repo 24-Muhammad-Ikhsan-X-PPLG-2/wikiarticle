@@ -87,7 +87,7 @@ const Login = () => {
                   className="mb-6 p-4 rounded-lg bg-green-50 dark:bg-green-500/10 border border-green-200 dark:border-green-500/30"
                 >
                   <p className="text-sm text-green-700 dark:text-green-400">
-                    You're in! Sign in to start exploring.
+                    You&apos;re in! Sign in to start exploring.
                   </p>
                 </motion.div>
               )}
@@ -120,12 +120,12 @@ const Login = () => {
                     Remember me
                   </span>
                 </label>
-                <a
-                  href="#"
+                <Link
+                  href="/forgot"
                   className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
 
               {/* Login Button */}
@@ -169,7 +169,7 @@ const Login = () => {
 
             {/* Sign Up Link */}
             <p className="text-center text-gray-600 dark:text-gray-400 mt-6">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link
                 href="/register"
                 className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-semibold transition-colors"

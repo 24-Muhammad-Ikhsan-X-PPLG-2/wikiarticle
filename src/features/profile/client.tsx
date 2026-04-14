@@ -60,7 +60,7 @@ const ProfileClient: FC<Props> = ({ profile, user }) => {
     resolver: zodResolver(
       profileSettingsSchema,
     ) as Resolver<ProfileSettingsSchemaType>,
-    mode: "onBlur",
+    mode: "onChange",
     defaultValues: {
       username: profile.username,
       emailNotifications: true,
@@ -79,6 +79,7 @@ const ProfileClient: FC<Props> = ({ profile, user }) => {
       isAuthor: profile.is_author || false,
     },
   });
+  methods.setValue;
   const {
     avatarPreview,
     handleDeleteAccount,
@@ -88,7 +89,7 @@ const ProfileClient: FC<Props> = ({ profile, user }) => {
     setCroppedAvatar,
     submitError,
     submitSuccess,
-  } = useProfile({ profile, user });
+  } = useProfile({ profile, user, setValue: methods.setValue });
   useEffect(() => {
     if (profile.avatar_url && profile.avatar_url.trim() !== "") {
       setAvatarPreview(profile.avatar_url);

@@ -21,7 +21,9 @@ export async function EditProfile(formData: FormData) {
     if (userError || !user) redirect("/login");
     // 2. Parsing data
     const rawProfile = JSON.parse(formData.get("profile") as string);
-    const rawPassword = JSON.parse(formData.get("profilePassword") as string);
+    const rawPassword = JSON.parse(
+      formData.get("profilePassword") as string,
+    ) as ProfilePasswordType;
     // 3. Update Metadata Profil (Hanya jika ada data)
     const { error: profileError } = await updateProfileMetadata({
       rawData: rawProfile,
@@ -103,7 +105,10 @@ async function changeUserPassword({
     email,
     pwdData.currentPassword!,
   );
-  if (!isValid) return { error: "Invalid current password!" };
+  if (!isValid)
+    return {
+      error: "Unable to update password. Please check your current password!",
+    };
 
   // Eksekusi update
   const { error } = await supabase.auth.updateUser({

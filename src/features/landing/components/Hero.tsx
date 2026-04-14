@@ -34,20 +34,20 @@ const Hero = () => {
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-lg leading-relaxed">
                 Join millions discovering, reading, and contributing to the
-                world's collaborative encyclopedia of knowledge.
+                world&apos;s collaborative encyclopedia of knowledge.
               </p>
             </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              {!userInfo.user && !isPending ? (
+              {!userInfo?.user && !isPending ? (
                 <Link href={"/register"}>
                   <button className="px-8 py-4 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-2">
                     Get Started
                     <ArrowRight className="w-5 h-5" />
                   </button>
                 </Link>
-              ) : userInfo.user && !isPending ? (
+              ) : userInfo?.user && !isPending ? (
                 <Link href={"/explore"}>
                   <button className="px-8 py-4 bg-linear-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-2">
                     Create Article

@@ -19,7 +19,7 @@ const Landing: FC = () => {
   return (
     <>
       <ModalLogout
-        username={userInfo.profile?.username}
+        username={userInfo?.profile?.username}
         showModal={showModalLogout}
         onClose={handleClose}
       />

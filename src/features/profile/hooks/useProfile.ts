@@ -24,9 +24,10 @@ import {
 type Props = {
   user: User;
   profile: ProfileDB;
+  setValue: UseFormSetValue<ProfileSettingsSchemaType>;
 };
 
-const useProfile = ({ user, profile }: Props) => {
+const useProfile = ({ user, profile, setValue }: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -92,6 +93,9 @@ const useProfile = ({ user, profile }: Props) => {
       const { error } = await EditProfile(form);
       if (error) throw new Error(error);
       setSubmitSuccess(true);
+      setValue("currentPassword", "");
+      setValue("newPassword", "");
+      setValue("confirmNewPassword", "");
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -102,6 +106,10 @@ const useProfile = ({ user, profile }: Props) => {
       setSubmitError(
         error instanceof Error ? error.message : "An error occurred",
       );
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     } finally {
       setIsSubmitting(false);
     }
