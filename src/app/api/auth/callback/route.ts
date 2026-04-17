@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.redirect(
         new URL("/login?error=invalid_token", req.url),
       );
-    return NextResponse.redirect(new URL(next || "/reset-password", req.url));
+    return NextResponse.redirect(new URL(next || "/", req.url));
   }
   return NextResponse.redirect(new URL("/?error=token_not_found", req.url));
 }

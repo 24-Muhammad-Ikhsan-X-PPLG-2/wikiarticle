@@ -28,6 +28,7 @@ const Register = () => {
     submitError,
     success,
   } = useRegister();
+  const router = useRouter();
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 transition-colors duration-300">
       <NavbarAuth />
@@ -160,7 +161,7 @@ const Register = () => {
             {/* Social Login Buttons */}
             <SocialLoginButtons
               onGoogleClick={() => handleSocialLogin("Google")}
-              onGithubClick={() => handleSocialLogin("GitHub")}
+              onEmailClick={() => router.push("/login/email")}
             />
 
             {/* Login Link */}

@@ -164,7 +164,7 @@ const Login = () => {
             {/* Social Login */}
             <SocialLoginButtons
               onGoogleClick={() => handleSocialLogin("Google")}
-              onGithubClick={() => handleSocialLogin("GitHub")}
+              onEmailClick={() => router.push("/login/email")}
             />
 
             {/* Sign Up Link */}

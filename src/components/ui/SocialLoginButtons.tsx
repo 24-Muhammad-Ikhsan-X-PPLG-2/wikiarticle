@@ -1,14 +1,14 @@
 "use client";
 
-import { Github } from "lucide-react";
+import { Mail } from "lucide-react";
 import { FC } from "react";
 
 type Props = {
   onGoogleClick?: () => void;
-  onGithubClick?: () => void;
+  onEmailClick?: () => void;
 };
 
-const SocialLoginButtons: FC<Props> = ({ onGithubClick, onGoogleClick }) => {
+const SocialLoginButtons: FC<Props> = ({ onEmailClick, onGoogleClick }) => {
   return (
     <div className="grid grid-cols-2 gap-4">
       {/* Google Button */}
@@ -37,13 +37,13 @@ const SocialLoginButtons: FC<Props> = ({ onGithubClick, onGoogleClick }) => {
         <span className="hidden sm:inline">Google</span>
       </button>
 
-      {/* GitHub Button */}
+      {/* Email Button */}
       <button
-        onClick={onGithubClick}
+        onClick={onEmailClick}
         className="px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-all duration-300 flex items-center justify-center gap-2"
       >
-        <Github className="w-5 h-5" />
-        <span className="hidden sm:inline">GitHub</span>
+        <Mail className="w-5 h-5" />
+        <span className="hidden sm:inline">Email</span>
       </button>
     </div>
   );

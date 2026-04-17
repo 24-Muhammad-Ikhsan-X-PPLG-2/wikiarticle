@@ -30,6 +30,7 @@ export async function RegisterAuth(formData: FormData) {
     options: {
       data: {
         username,
+        email,
         birth_date: birthDate,
       },
     },

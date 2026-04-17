@@ -6,7 +6,10 @@ export async function updateSession(req: NextRequest) {
     request: req,
   });
   const { pathname } = req.nextUrl;
-  const isAuthRoute = pathname === "/login" || pathname === "/register";
+  const isAuthRoute =
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname === "/login/email";
   const protectedRoute = ["/profile"];
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_API_URL!,
@@ -17,7 +20,7 @@ export async function updateSession(req: NextRequest) {
           return req.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value }) =>
             req.cookies.set(name, value),
           );
           supabaseResponse = NextResponse.next({

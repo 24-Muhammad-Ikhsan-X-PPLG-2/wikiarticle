@@ -99,11 +99,11 @@ const ProfileClient: FC<Props> = ({ profile, user }) => {
     methods.setValue("username", profile.username);
     methods.setValue("bio", profile.bio);
     methods.setValue("website_url", profile.website_url || "");
-    methods.setValue("twitter_url", profile.social_links.twitter || "");
-    methods.setValue("github_url", profile.social_links.github || "");
-    methods.setValue("linkedin_url", profile.social_links.linkedin || "");
-    methods.setValue("facebook_url", profile.social_links.facebook || "");
-    methods.setValue("instagram_url", profile.social_links.instagram || "");
+    methods.setValue("twitter_url", profile.social_links?.twitter || "");
+    methods.setValue("github_url", profile.social_links?.github || "");
+    methods.setValue("linkedin_url", profile.social_links?.linkedin || "");
+    methods.setValue("facebook_url", profile.social_links?.facebook || "");
+    methods.setValue("instagram_url", profile.social_links?.instagram || "");
     methods.setValue("isAuthor", profile.is_author || false);
     if (profile.avatar_url) {
       setAvatarPreview(profile.avatar_url);

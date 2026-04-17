@@ -1,6 +1,7 @@
 "use client";
 
 import { ForgotPasswordAuth } from "@/actions/auth/forgotPassword";
+import supabase from "@/lib/supabase";
 import { forgotSchema, ForgotSchemaType } from "@/schemas/forgotSchema";
 import { createClient } from "@/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -43,7 +44,6 @@ const useForgot = () => {
         );
         return;
       }
-      const supabase = createClient();
 
       const { data: checkUser } = (await supabase
         .from("profiles")
@@ -51,25 +51,10 @@ const useForgot = () => {
         .eq("email", dataForm.email)
         .maybeSingle()) as PostgrestMaybeSingleResponse<{ id: string }>;
       if (checkUser) {
-        const expiresAt = new Date(
-          Date.now() + 24 * 60 * 60 * 1000,
-        ).toISOString();
-        const { error: errorForgotPassword, data: dataForgotPassword } =
-          await supabase
-            .from("forgot_password")
-            .insert({
-              user_id: checkUser.id,
-              expires_at: expiresAt,
-            })
-            .select("id")
-            .maybeSingle();
-        if (errorForgotPassword) throw new Error(errorForgotPassword.message);
-
-        const { error: errorResetPassword } =
-          await supabase.auth.resetPasswordForEmail(dataForm.email, {
-            redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback?next=/reset-password/${dataForgotPassword?.id}`,
-          });
-
+        const { error: errorResetPassword } = await sendEmailForgotPassword(
+          checkUser.id,
+          dataForm.email,
+        );
         if (errorResetPassword) {
           setSubmitError(
             res.error ?? "Failed to send reset link. Please try again.",
@@ -116,5 +101,32 @@ const useForgot = () => {
     resetState,
   };
 };
+
+async function sendEmailForgotPassword(user_id: string, email: string) {
+  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
+  const { error: errorForgotPassword, data: dataForgotPassword } =
+    await supabase
+      .from("forgot_password")
+      .insert({
+        user_id,
+        expires_at: expiresAt,
+      })
+      .select("id")
+      .maybeSingle();
+  if (errorForgotPassword) throw new Error(errorForgotPassword.message);
+
+  const { error: errorResetPassword } =
+    await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/api/auth/callback?next=/reset-password/${dataForgotPassword?.id}`,
+    });
+
+  if (errorResetPassword)
+    return {
+      error: errorResetPassword.message,
+    };
+  return {
+    error: null,
+  };
+}
 
 export default useForgot;
