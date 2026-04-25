@@ -10,7 +10,7 @@ export async function updateSession(req: NextRequest) {
     pathname === "/login" ||
     pathname === "/register" ||
     pathname === "/login/email";
-  const protectedRoute = ["/profile"];
+  const protectedRoute = ["/profile", "/create-client"];
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_API_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISH_KEY!,

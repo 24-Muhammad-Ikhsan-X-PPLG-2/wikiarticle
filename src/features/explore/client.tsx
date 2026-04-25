@@ -15,7 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import supabase from "@/lib/supabase";
 import { CategoriesType } from "@/types/categories";
 
-async function getCategories(): Promise<CategoriesType[] | null> {
+export async function getCategories(): Promise<CategoriesType[] | null> {
   const { data } = await supabase.from("categories").select("*");
   return data;
 }

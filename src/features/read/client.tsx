@@ -27,10 +27,10 @@ const ReadClient: FC<Props> = ({ articleData }) => {
   useEffect(() => {
     (async () => {
       const parser = new DOMParser();
-      const html = await markdownToHtml(articleData.content);
+      const html = articleData.content;
       setContent(html);
       const doc = parser.parseFromString(html, "text/html");
-      const headings = Array.from(doc.querySelectorAll("h2, h3")).map(
+      const headings = Array.from(doc.querySelectorAll("h1, h2, h3")).map(
         (heading) => {
           const level = parseInt(heading.tagName[1]);
           const id = heading.getAttribute("id") || `heading-${Math.random()}`;

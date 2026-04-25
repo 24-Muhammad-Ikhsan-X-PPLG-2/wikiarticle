@@ -25,3 +25,11 @@ export const getUserSupabase = async (): Promise<{
     profile,
   };
 };
+
+export const getUserSupabaseWithoutProfile = async (): Promise<User | null> => {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  return user;
+};
