@@ -110,13 +110,13 @@ cd wikiarticle
 ### 2️⃣ Install dependencies
 
 ```bash
-npm install
+bun install
 ```
 
 ### 3️⃣ Run development
 
 ```bash
-npm run dev
+bun run dev
 ```
 
 🚀 Buka di browser:
