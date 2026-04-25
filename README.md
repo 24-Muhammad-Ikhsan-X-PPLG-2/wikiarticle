@@ -103,7 +103,7 @@ Login system (opsional).
 ### 1️⃣ Clone repository
 
 ```bash
-git clone git@github.com:username/wikiarticle.git
+git clone https://github.com/24-Muhammad-Ikhsan-X-PPLG-2/wikiarticle.git
 cd wikiarticle
 ```
 
