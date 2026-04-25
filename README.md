@@ -1,36 +1,206 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌌 WikiArticle
 
-## Getting Started
+<p align="center">
+  <img src="https://img.shields.io/badge/WikiArticle-Modern%20Article%20Platform-6C63FF?style=for-the-badge" />
+</p>
 
-First, run the development server:
+<p align="center">
+  <img src="https://img.shields.io/github/stars/username/wikiarticle?style=flat&logo=github" />
+  <img src="https://img.shields.io/github/forks/username/wikiarticle?style=flat&logo=github" />
+  <img src="https://img.shields.io/github/issues/username/wikiarticle?style=flat&logo=github" />
+  <img src="https://img.shields.io/github/license/username/wikiarticle" />
+</p>
+
+---
+
+## 🚀 About
+
+**WikiArticle** adalah platform artikel modern, cepat, dan minimalis untuk berbagi pengetahuan.
+
+✨ Dibuat untuk:
+
+- 📖 Membaca artikel dengan nyaman
+- ✍️ Menulis & mengelola konten
+- ⚡ Performa cepat & ringan
+
+---
+
+## 🧠 Tech Stack
+
+<p>
+  <img src="https://skillicons.dev/icons?i=nextjs,react,ts,tailwind,supabase,vercel" />
+</p>
+
+---
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%">
+
+### 📝 Create & Manage
+
+Buat, edit, dan hapus artikel dengan mudah.
+
+</td>
+<td width="50%">
+
+### 🔍 Search Articles
+
+Cari artikel dengan cepat dan efisien.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+### 🌙 Dark Mode
+
+Nyaman di mata dengan mode gelap.
+
+</td>
+<td>
+
+### ⚡ Fast Performance
+
+Optimasi performa modern.
+
+</td>
+</tr>
+
+<tr>
+<td>
+
+### 📱 Responsive Design
+
+Tampilan di semua device.
+
+</td>
+<td>
+
+### 🔐 Authentication
+
+Login system (opsional).
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🖼️ Preview
+
+<p align="center">
+  <img src="./public/preview.png" width="80%" />
+</p>
+
+---
+
+## 📦 Installation
+
+### 1️⃣ Clone repository
+
+```bash
+git clone git@github.com:username/wikiarticle.git
+cd wikiarticle
+```
+
+### 2️⃣ Install dependencies
+
+```bash
+npm install
+```
+
+### 3️⃣ Run development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🚀 Buka di browser:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📂 Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+wikiarticle/
+├── src/
+├──── app/
+├──── actions/
+├──── components/
+├────── layout/
+├────── ui/
+├──── lib/
+├──── constants/
+├──── features/
+├──── hooks/
+├──── providers/
+├──── queryFetch/
+├──── schemas/
+├──── supabase/
+├──── types/
+├──── proxy.ts
+├── public/
+├── supabase/
+└── README.md
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔑 Environment
 
-## Deploy on Vercel
+```env
+NEXT_PUBLIC_SUPABASE_API_URL=your_url_supabase
+NEXT_PUBLIC_SUPABASE_PUBLISH_KEY=your_key_supabase
+SUPABASE_SECRET_KEY=your_secret_key_supabase
+NEXT_PUBLIC_APP_NAME=your_app_name
+NEXT_PUBLIC_APP_URL=your_app_url
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🎯 Roadmap
+
+- 🧠 AI Article Generator
+- 📊 Analytics Dashboard
+- 🌐 Multi-language
+- 🧩 Plugin System
+
+---
+
+## 🤝 Contributing
+
+1. Fork repo
+2. Create branch
+3. Commit
+4. Push
+5. Pull Request
+
+---
+
+## ⭐ Support
+
+Kalau project ini membantu:
+
+- ⭐ Star repo
+- 🍴 Fork
+- 📢 Share
+
+---
+
+## 💬 Quote
+
+> "Knowledge grows when shared." 🚀
+
+---
+
+## 👨‍💻 Author
+
+Made with ❤️ by **Ikhsan**
