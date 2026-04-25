@@ -5,10 +5,10 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/stars/username/wikiarticle?style=flat&logo=github" />
-  <img src="https://img.shields.io/github/forks/username/wikiarticle?style=flat&logo=github" />
-  <img src="https://img.shields.io/github/issues/username/wikiarticle?style=flat&logo=github" />
-  <img src="https://img.shields.io/github/license/username/wikiarticle" />
+  <img src="https://img.shields.io/github/stars/24-Muhammad-Ikhsan-X-PPLG-2/wikiarticle?style=flat&logo=github" />
+  <img src="https://img.shields.io/github/forks/24-Muhammad-Ikhsan-X-PPLG-2/wikiarticle?style=flat&logo=github" />
+  <img src="https://img.shields.io/github/issues/24-Muhammad-Ikhsan-X-PPLG-2/wikiarticle?style=flat&logo=github" />
+  <img src="https://img.shields.io/github/license/24-Muhammad-Ikhsan-X-PPLG-2/wikiarticle" />
 </p>
 
 ---
