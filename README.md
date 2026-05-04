@@ -166,15 +166,6 @@ NEXT_PUBLIC_APP_URL=your_app_url
 
 ---
 
-## 🎯 Roadmap
-
-- 🧠 AI Article Generator
-- 📊 Analytics Dashboard
-- 🌐 Multi-language
-- 🧩 Plugin System
-
----
-
 ## 🤝 Contributing
 
 1. Fork repo
