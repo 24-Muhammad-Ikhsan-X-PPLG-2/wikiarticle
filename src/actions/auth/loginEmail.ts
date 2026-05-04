@@ -1,14 +1,15 @@
 "use server";
 
 import { getIpUser } from "@/lib/getIpUser";
-import { rateLimiter } from "@/lib/redis/rateLimiter";
+import { rateLimiter } from "@/lib/rateLimiter";
 import serverActionReturn, {
   serverActionReturnError,
 } from "@/lib/serverActionReturn";
 import { loginEmailSchema } from "@/schemas/loginEmailSchema";
 import { createClient } from "@/supabase/server";
 
-export async function SendMagicLink(email: string) {
+export async function SendMagicLink(dataForm: FormData) {
+  const email = String(dataForm.get("email"));
   const parse = loginEmailSchema.safeParse({
     email,
   });

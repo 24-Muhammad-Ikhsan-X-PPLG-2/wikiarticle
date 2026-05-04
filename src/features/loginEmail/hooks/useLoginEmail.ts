@@ -50,7 +50,9 @@ const useLoginEmail = () => {
       resetState();
 
       // Call server action to send magic link
-      const res = await SendMagicLink(dataForm.email);
+      const form = new FormData();
+      form.set("email", dataForm.email);
+      const res = await SendMagicLink(form);
 
       if (!res.success) {
         setSubmitError(res.error ?? "Failed to send login link");
@@ -77,7 +79,9 @@ const useLoginEmail = () => {
       resetState();
 
       // Call server action to resend magic link
-      const res = await SendMagicLink(sentEmail);
+      const form = new FormData();
+      form.set("email", sentEmail);
+      const res = await SendMagicLink(form);
 
       if (!res.success) {
         setSubmitError(res.error ?? "Failed to resend login link");

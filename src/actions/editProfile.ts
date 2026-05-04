@@ -1,5 +1,6 @@
 "use server";
 
+import { printLog } from "@/lib/log/printLog";
 import serverActionReturn, {
   serverActionReturnError,
 } from "@/lib/serverActionReturn";
@@ -7,7 +8,7 @@ import { validateCurrentPassword } from "@/lib/validatePassword";
 import { profileSettingsSchema } from "@/schemas/profileSettingsSchema";
 import { createClient } from "@/supabase/server";
 import { ProfileDataType, ProfilePasswordType } from "@/types/profileData";
-import { SupabaseClient } from "@supabase/supabase-js";
+import { SupabaseClient, User } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 
 export async function EditProfile(formData: FormData) {
@@ -29,6 +30,7 @@ export async function EditProfile(formData: FormData) {
       rawData: rawProfile,
       supabase,
       userId: user.id,
+      user,
     });
     if (profileError) throw new Error(profileError);
 
@@ -38,6 +40,7 @@ export async function EditProfile(formData: FormData) {
         email: user.email!,
         pwdData: rawPassword,
         supabase,
+        user,
       });
       if (passwordError) throw new Error(passwordError);
     }
@@ -56,10 +59,12 @@ async function updateProfileMetadata({
   supabase,
   rawData,
   userId,
+  user,
 }: {
   supabase: SupabaseClient;
   rawData: ProfileDataType;
   userId: string;
+  user: User;
 }) {
   const { error: parseError } = profileSettingsSchema.safeParse(rawData);
   if (parseError) return { error: parseError.message };
@@ -80,6 +85,10 @@ async function updateProfileMetadata({
     .eq("id", userId);
   if (errorAuth) return { error: errorAuth.message || null };
   if (errorProfiles) return { error: errorProfiles.message || null };
+  printLog("User change profile detected", {
+    email: user.email,
+    username: user.user_metadata.username,
+  });
   return { error: null };
 }
 
@@ -90,10 +99,12 @@ async function changeUserPassword({
   email,
   pwdData,
   supabase,
+  user,
 }: {
   supabase: SupabaseClient;
   email: string;
   pwdData: ProfilePasswordType;
+  user: User;
 }) {
   // Keamanan: Validasi kecocokan password baru
   if (pwdData.newPassword !== pwdData.confirmNewPassword) {
@@ -114,7 +125,12 @@ async function changeUserPassword({
   const { error } = await supabase.auth.updateUser({
     password: pwdData.newPassword,
   });
-
+  if (!error) {
+    printLog("User change password detected", {
+      email: user.email,
+      username: user.user_metadata.username,
+    });
+  }
   return { error: error?.message || null };
 }
 

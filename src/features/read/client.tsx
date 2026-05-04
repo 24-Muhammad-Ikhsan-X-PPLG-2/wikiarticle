@@ -10,7 +10,6 @@ import ArticleHeader from "./components/ArticleHeader";
 import AuthorBio from "./components/AuthorBio";
 import RelatedArticles from "./components/RelatedArticles";
 import CommentSection from "./components/CommentSection";
-import markdownToHtml from "@/lib/markdownToHtml";
 import { ArticlesType } from "@/types/articles";
 
 type Props = {

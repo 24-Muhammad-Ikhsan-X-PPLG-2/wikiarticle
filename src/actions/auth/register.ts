@@ -1,5 +1,6 @@
 "use server";
 
+import { printLog } from "@/lib/log/printLog";
 import serverActionReturn, {
   serverActionReturnError,
 } from "@/lib/serverActionReturn";
@@ -36,5 +37,9 @@ export async function RegisterAuth(formData: FormData) {
     },
   });
   if (errorAuth) return serverActionReturnError(errorAuth.message);
+  printLog("User register detected", {
+    email: parse.data.email,
+    username: parse.data.username,
+  });
   return serverActionReturn();
 }

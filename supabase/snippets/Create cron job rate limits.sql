@@ -1,0 +1,1 @@
+select cron.schedule('0 * * * *', $$delete from rate_limits where reset_at < now()$$);

@@ -27,6 +27,18 @@ export async function CreateArticle(form: FormData) {
   if (!user) {
     return serverActionReturnError("User not log in.");
   }
+  const checkAuthor = (
+    await supabase
+      .from("profiles")
+      .select("is_author")
+      .eq("id", user.id)
+      .maybeSingle()
+  ).data?.is_author as boolean;
+
+  if (!checkAuthor) {
+    return serverActionReturnError("You're not author!");
+  }
+
   const { data: checkCategoryData } = await supabase
     .from("categories")
     .select("*")

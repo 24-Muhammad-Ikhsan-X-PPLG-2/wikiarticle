@@ -1,7 +1,7 @@
 "use server";
 
 import { getIpUser } from "@/lib/getIpUser";
-import { rateLimiter } from "@/lib/redis/rateLimiter";
+import { rateLimiter } from "@/lib/rateLimiter";
 import serverActionReturn, {
   serverActionReturnError,
 } from "@/lib/serverActionReturn";

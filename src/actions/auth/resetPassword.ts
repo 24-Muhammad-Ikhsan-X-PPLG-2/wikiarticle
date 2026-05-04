@@ -1,5 +1,6 @@
 "use server";
 
+import { printLog } from "@/lib/log/printLog";
 import serverActionReturn, {
   serverActionReturnError,
 } from "@/lib/serverActionReturn";
@@ -18,9 +19,16 @@ export async function ResetPasswordAuth(dataForm: FormData) {
       "confirmPassword",
     );
   const supabase = await createClient();
-  const { error } = await supabase.auth.updateUser({
+  const {
+    error,
+    data: { user },
+  } = await supabase.auth.updateUser({
     password: newPassword,
   });
   if (error) return serverActionReturnError(error.message);
+  printLog("User change password detected", {
+    email: user?.email,
+    username: user?.user_metadata.username,
+  });
   return serverActionReturn();
 }
